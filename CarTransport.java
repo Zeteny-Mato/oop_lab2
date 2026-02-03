@@ -5,7 +5,7 @@ public class CarTransport extends Trucks{
 
     public CarTransport(int nrDoors, double enginePower, java.awt.Color color, String modelName, int capacity) 
     {
-        super(nrDoors, enginePower, color, modelName);
+        super(nrDoors, enginePower, color, modelName, 0);
         this.capacity = capacity;
         this.currentLoad = 0;
     }

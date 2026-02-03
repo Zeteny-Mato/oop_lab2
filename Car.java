@@ -28,27 +28,27 @@ public abstract class Car implements Movable {
 
     //  Publika getters (användaren får läsa men inte ändra) 
 
-    protected int getNrDoors() {
+    public int getNrDoors() {
         return nrDoors;                   // Returnerar antal dörrar
     }
 
-    protected double getEnginePower() {
+    public double getEnginePower() {
         return enginePower;               // Returnerar motoreffekten
     }
 
-    protected double getCurrentSpeed() {
+    public double getCurrentSpeed() {
         return currentSpeed;              // Returnerar nuvarande hastighet
     }
 
-    protected Color getColor() {
+    public Color getColor() {
         return color;                     // Returnerar bilens färg
     }
 
-    protected String getModelName() {
+    public String getModelName() {
         return modelName;                 // Returnerar modellnamnet
     }
 
-    protected int getDirection() {
+    public int getDirection() {
         return direction;                 // Returnerar bilens riktning
     }
 
