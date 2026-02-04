@@ -46,7 +46,7 @@ public class CarTransport <T extends Car>extends Trucks{
             throw new IllegalArgumentException("No cars loaded or truck is moving");
         }
         T car = loadedCars.remove(loadedCars.size() - 1);
-        car.x = this.x + 1 + unloadOffset; //Bilens position är brevid lastbilen. 
+        car.x = this.x + 1 + unloadOffset; //Placerar bilen bredvid lastbilen när den lastas av med offset
         car.y = this.y;
         unloadOffset += 1; //Nästa bil placeras ett steg längre bort
         return car;
