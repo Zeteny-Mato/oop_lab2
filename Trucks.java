@@ -14,7 +14,7 @@ public abstract class Trucks extends Car {
 
     public void raisePlatform(double amount) {
         double new_angle = angle + amount;
-        if (getCurrentSpeed() != 0 && new_angle < 0 && new_angle > 70) {
+        if (getCurrentSpeed() != 0 && (new_angle < 0 || new_angle > 70)) {
             throw new IllegalArgumentException("Speed must be 0 and angle between 0 and 70");
         }
         angle = new_angle;
@@ -22,7 +22,7 @@ public abstract class Trucks extends Car {
 
     public void lowerPlatform(double amount) {
         double new_angle = angle - amount;
-        if (getCurrentSpeed() != 0 && new_angle < 0 && new_angle > 70) {
+        if (getCurrentSpeed() != 0 && (new_angle < 0 || new_angle > 70)) {
              throw new IllegalArgumentException("Speed must be 0 and angle between 0 and 70");
         } 
         angle = new_angle;

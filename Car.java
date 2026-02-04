@@ -89,7 +89,7 @@ public abstract class Car implements Movable {
         if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("Amount must be between 0 and 1");
         }
-        decrementSpeed(amount);           // Minskar hastigheten
+        decrementSpeed(amount);         // Minskar hastigheten
     }
 
     // Abstrakt metod som subklasser måste implementera 

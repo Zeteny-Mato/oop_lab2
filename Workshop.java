@@ -22,4 +22,5 @@ public class Workshop<T extends Car> {
         }
         return cars_amount.remove(index);
     }
+    
 }
