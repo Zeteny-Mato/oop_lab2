@@ -28,6 +28,16 @@ public abstract class Trucks extends Car {
         angle = new_angle;
         //antingen göra så att man får ett felmeddelande eller att den sätts till max eller min
     }
+    @Override
+    protected double speedFactor() {
+        if (getPlatformAngle() <= 35) {
+            return 0; // Ingen acceleration om plattformen är nere. 
+        }
+        else { 
+            return getEnginePower() * 0.01; // Justerar acceleration 
+        }
+    }
+    
 // 0 är nere, 70 är uppe
     
 }
