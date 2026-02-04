@@ -2,6 +2,7 @@
 public abstract class Trucks extends Car {
     private double angle;
 
+
     public Trucks(int nrDoors, double enginePower, java.awt.Color color, String modelName, double angle) {
         super(nrDoors, enginePower, color, modelName);
         this.angle = angle;
@@ -27,6 +28,6 @@ public abstract class Trucks extends Car {
         angle = new_angle;
         //antingen göra så att man får ett felmeddelande eller att den sätts till max eller min
     }
-
+// 0 är nere, 70 är uppe
     
 }
