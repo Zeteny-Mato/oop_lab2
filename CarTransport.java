@@ -7,9 +7,10 @@ public class CarTransport <T extends Car>extends Trucks{
     private int unloadOffset = 0; //Håller koll på hur långt ifrån nästa lossad bil ska placeras 
     
 //lista för bilar på flaket. 
-    public CarTransport(int nrDoors, double enginePower, Color color, String modelName, int capacity, List<T> loadedCars) 
+    public CarTransport(int capacity, List<T> loadedCars) 
     {
-        super(nrDoors, enginePower, color, modelName, 70);
+        //int nrDoors, double enginePower, Color color, String modelName
+        super(2, 400, Color.BLUE, "CarTransport", 70);
         this.capacity = capacity;
         this.loadedCars = new ArrayList<>();
     }
@@ -65,9 +66,17 @@ public class CarTransport <T extends Car>extends Trucks{
             car.y = this.getY();
         }
     }
+    public boolean GetRampPosition()
+    {
+        if(getPlatformAngle() == 0)
+        {
+            return false; //nere
+        }
+        return true; //uppe
+    }
     @Override //Får inte köra när rampen är nere
     public void gas(double amount) {
-        if (getPlatformAngle() == 0) return;
+        if (GetRampPosition() == false) return;
         super.gas(amount);
     }
     @Override //Ser till att lastade bilar följer med
