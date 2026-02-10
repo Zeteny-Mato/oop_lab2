@@ -14,28 +14,32 @@ public abstract class Trucks extends Car {
 
     public void raisePlatform(double amount) {
         double new_angle = angle + amount;
-        if (getCurrentSpeed() != 0 && (new_angle < 0 || new_angle > 70)) {
-            throw new IllegalArgumentException("Speed must be 0 and angle between 0 and 70");
+        if (getCurrentSpeed() != 0 )
+            throw new IllegalStateException("Speed must be 0 to raise the platform");
+        if (new_angle < 0 || new_angle > 70) {
+            throw new IllegalArgumentException("Angle must be between 0 and 70");
         }
         angle = new_angle;
     }
 
     public void lowerPlatform(double amount) {
         double new_angle = angle - amount;
-        if (getCurrentSpeed() != 0 && (new_angle < 0 || new_angle > 70)) {
-             throw new IllegalArgumentException("Speed must be 0 and angle between 0 and 70");
-        } 
+        if (getCurrentSpeed() != 0) {
+            throw new IllegalStateException("Speed must be 0 to lower the platform");
+        }
+        if (new_angle < 0 || new_angle > 70) {
+            throw new IllegalArgumentException("Angle must be between 0 and 70");
+        }
         angle = new_angle;
         //antingen göra så att man får ett felmeddelande eller att den sätts till max eller min
     }
     @Override
     protected double speedFactor() {
-        if (getPlatformAngle() <= 35) {
+        if (getPlatformAngle() != 70) {
             return 0; // Ingen acceleration om plattformen är nere. 
         }
-        else { 
-            return getEnginePower() * 0.01; // Justerar acceleration 
-        }
+        return getEnginePower() * 0.01; // Justerar acceleration 
+        
     }
     
 // 0 är nere, 70 är uppe
