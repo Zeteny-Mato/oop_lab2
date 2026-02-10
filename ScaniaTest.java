@@ -22,4 +22,17 @@ class ScaniaTest {
     void getColor() {
         assertEquals(Color.RED, scania.getColor());
     }
+
+    @Test
+    void lowerPlatform() {
+        scania.lowerPlatform(0);
+        assertEquals(0, scania.getPlatformAngle());
+    }
+
+    @Test
+    void raisePlatform() {
+        scania.lowerPlatform(0);
+        scania.raisePlatform(70);
+        assertEquals(70, scania.getPlatformAngle());
+    }
 }
