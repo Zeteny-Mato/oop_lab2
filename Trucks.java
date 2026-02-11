@@ -1,15 +1,15 @@
 //Trucks
 public abstract class Trucks extends Car {
-    private double angle;
+    private double angle; //vinkel på flaket 0 = nere, 70 = uppe
 
 
     public Trucks(int nrDoors, double enginePower, java.awt.Color color, String modelName, double angle) {
         super(nrDoors, enginePower, color, modelName);
-        this.angle = angle;
+        this.angle = angle; //Sätter startvinkeln
     }
 
     public double getPlatformAngle(){
-        return angle;
+        return angle; //Returnerar vinkeln på flaket
     }
 
     public void raiseorlowerPlatform(double amount) {
