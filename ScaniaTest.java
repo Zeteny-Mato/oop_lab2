@@ -25,14 +25,14 @@ class ScaniaTest {
 
     @Test
     void lowerPlatform() {
-        scania.lowerPlatform(70);
+        scania.raiseorlowerPlatform(-70);
         assertEquals(0, scania.getPlatformAngle());
     }
 
     @Test
     void raisePlatform() {
-        scania.lowerPlatform(70);
-        scania.raisePlatform(70);
+        scania.raiseorlowerPlatform(-70);
+        scania.raiseorlowerPlatform(70);
         assertEquals(70, scania.getPlatformAngle());
     }
 }
