@@ -1,21 +1,18 @@
 import org.junit.jupiter.api.Test;
-
 import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class ScaniaTest {
     private final Scania scania = new Scania();
 
     @Test
     void getNrDoors() {
-        assertEquals(2,scania.getNrDoors());
+        assertEquals(2, scania.getNrDoors());
     }
 
     @Test
     void getEnginePower() {
-        assertEquals(400,scania.getEnginePower());
+        assertEquals(400, scania.getEnginePower());
     }
 
     @Test
@@ -24,14 +21,9 @@ class ScaniaTest {
     }
 
     @Test
-    void lowerPlatform() {
+    void raiseorlowerPlatform() {
         scania.raiseorlowerPlatform(-70);
         assertEquals(0, scania.getPlatformAngle());
-    }
-
-    @Test
-    void raisePlatform() {
-        scania.raiseorlowerPlatform(-70);
         scania.raiseorlowerPlatform(70);
         assertEquals(70, scania.getPlatformAngle());
     }
