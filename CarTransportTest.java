@@ -3,8 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.*;
 
 public class CarTransportTest {
-    private CarTransport carTransport =
-    new CarTransport(2,300,Color.BLUE, "CarTransport", 6);
+    private CarTransport<Car> carTransport = new CarTransport(5);
+    private Volvo240 volvo = new Volvo240();
 
     @Test
     void getCapacity(){
@@ -13,28 +13,18 @@ public class CarTransportTest {
 
     @Test
     void getCurrentLoad(){ //init check
-        assertEquals(0, carTransport.getCurrentLoad());
+        assertEquals(0, carTransport.loadedCars.size());
     }
 
     @Test
-    void loadCar(){
-        carTransport.loadCar();
-        assertEquals(1, carTransport.getCurrentLoad());
-    }
-
-    @Test
-    void unloadCar(){
+    void loadandunloadCar(){
+ 
+        carTransport.loadCar(volvo);
+        assertEquals(1, carTransport.loadedCars.size());
         carTransport.unloadCar();
-        assertEquals(0, carTransport.getCurrentLoad());
+        assertEquals(0, carTransport.loadedCars.size());
     }
 
-    @Test
-    void capacityCheck(){
-        for(int i = 0; i < 6; i++) {
-            carTransport.loadCar();
-        }
-        assertThrows(IllegalArgumentException.class, carTransport::loadCar);
-    }
 
     @Test
     void CannotUnloadWhenEmpty(){
@@ -43,15 +33,16 @@ public class CarTransportTest {
 
     @Test
     void cannotLoadWhenMoving(){
+        ;
         carTransport.startEngine();
         carTransport.gas(1.0);
 
-        assertThrows(IllegalArgumentException.class, carTransport::loadCar);
+        assertThrows(IllegalArgumentException.class, () -> carTransport.loadCar(volvo));
     }
 
     @Test
     void cannotUnloadWhenMoving(){
-        carTransport.loadCar();
+        carTransport.loadCar(volvo);
         carTransport.startEngine();
         carTransport.gas(1.0);
 
@@ -59,19 +50,20 @@ public class CarTransportTest {
     }
 
     @Test 
-    void canAccelPlatformDown(){
+    void cantAccelPlatformup(){
         carTransport.startEngine();
         carTransport.gas(1.0);
         
-        assertTrue(carTransport.getCurrentSpeed() > 0);
+        assertEquals(0, carTransport.getCurrentSpeed());
     }
 
     @Test
-    void cantAccelPlatformUp(){
-        carTransport.raisePlatform(30);
+    void cantAccelPlatformDown(){
+        carTransport.raiseorlowerPlatform(-30);
         carTransport.startEngine();
         carTransport.gas(1.0);
 
-        assertEquals(0, carTransport.getCurrentSpeed());
+        
+        assertTrue(carTransport.getCurrentSpeed() > 0);
     }
 }

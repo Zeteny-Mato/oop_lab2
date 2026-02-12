@@ -3,16 +3,16 @@ import java.util.ArrayList;
 import java.util.List;
 public class CarTransport <T extends Car>extends Trucks{
     private int capacity; //Max antal bilar
-    private List<T> loadedCars; //Lista över alla lastade bilar
+    public List<T> loadedCars = new ArrayList<>(); //Lista över alla lastade bilar
     private int unloadOffset = 0; //Håller koll på hur långt ifrån nästa lossad bil ska placeras 
     
 //konstruktor
-    public CarTransport(int capacity, List<T> loadedCars) 
+    public CarTransport(int capacity) 
     {
         //int nrDoors, double enginePower, Color color, String modelName
         super(2, 400, Color.BLUE, "CarTransport", 70); //anropar turcks konstruktorn
         this.capacity = capacity; //sätter maxkapacitet
-        this.loadedCars = new ArrayList<>(); //skapar en tom lista för lastade bilar
+        //this.loadedCars = new ArrayList<>(); //skapar en tom lista för lastade bilar
     }
 
     public int getCapacity() {
