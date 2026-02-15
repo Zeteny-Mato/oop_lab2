@@ -61,7 +61,7 @@ public class CarTransport <T extends Car>extends Trucks{
         double distance = Math.sqrt(dx * dx + dy * dy); //Beräknar det totala avståndet
         return distance <= max_Distance; //Returnerar true om bilen är inom räckvidd, annars false
     }
-    public void movewithloadedCars(){ //Flyttar med alla lastade bilar
+    private void movewithloadedCars(){ //Flyttar med alla lastade bilar
         for (T car : loadedCars) {
             car.x = this.getX();
             car.y = this.getY();

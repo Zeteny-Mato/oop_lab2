@@ -25,12 +25,22 @@ public abstract class Trucks extends Car {
     
     @Override
     protected double speedFactor() {
-        if (getPlatformAngle() != 70) {
+        if (getPlatformAngle() == 0) {
             return 0; // Ingen acceleration om plattformen är nere. 
         }
         return getEnginePower() * 0.01; // Justerar acceleration 
         
     }
+
+    @Override
+    public void gas(double amount) {
+        if (getPlatformAngle() == 0) {
+            throw new IllegalStateException("Cannot accelerate with platform down");
+        }
+        super.gas(amount);
+    }
+
+
     
 // 0 är nere, 70 är uppe
     

@@ -18,12 +18,14 @@ public class Workshop<T extends Car> {
         cars_amount.add(car);
     }
 
-    public T retrieveCar(int index) {
-        if (index < 0 || index >= cars_amount.size()) { //Kollar att indexet är giltigt
+    public T retrieveCar(T car) {
+        /*if (index < 0 || index >= cars_amount.size()) { //Kollar att indexet är giltigt
             throw new IndexOutOfBoundsException("No car at the given index");
         }
+            */
         //Tar bort och returnerar bilen på det angivna indexet
-        return cars_amount.remove(index);
+        cars_amount.remove(car);
+        return car;
     }
     
 }

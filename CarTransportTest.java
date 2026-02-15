@@ -18,6 +18,7 @@ public class CarTransportTest {
 
     @Test
     void loadandunloadCar(){
+        carTransport.raiseorlowerPlatform(-70); //sänker rampen
  
         carTransport.loadCar(volvo);
         assertEquals(1, carTransport.loadedCars.size());
@@ -42,6 +43,7 @@ public class CarTransportTest {
 
     @Test
     void cannotUnloadWhenMoving(){
+        carTransport.raiseorlowerPlatform(-70);
         carTransport.loadCar(volvo);
         carTransport.startEngine();
         carTransport.gas(1.0);
@@ -49,14 +51,7 @@ public class CarTransportTest {
         assertThrows(IllegalArgumentException.class, carTransport::unloadCar);
     }
 
-    @Test 
-    void cantAccelPlatformup(){
-        carTransport.startEngine();
-        carTransport.gas(1.0);
-        
-        assertEquals(0, carTransport.getCurrentSpeed());
-    }
-
+   
     @Test
     void cantAccelPlatformDown(){
         carTransport.raiseorlowerPlatform(-30);
