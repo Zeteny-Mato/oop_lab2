@@ -34,6 +34,10 @@ public class CarController {
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
 
+        cc.cars.get(0).y = 0;
+        cc.cars.get(1).y = 100;
+        cc.cars.get(2).y = 200;
+
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 

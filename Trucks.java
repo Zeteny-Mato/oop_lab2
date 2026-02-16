@@ -40,6 +40,16 @@ public abstract class Trucks extends Car {
         super.gas(amount);
     }
 
+    @Override 
+    public void startEngine()
+    {
+        if (getPlatformAngle() == 0) {
+            return; //motorn får inte starta.  
+        }
+        super.startEngine();
+
+    }
+
 
     
 // 0 är nere, 70 är uppe
