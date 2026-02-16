@@ -15,7 +15,7 @@ public abstract class Car implements Movable {
     protected double y = 0;
 
     // Riktning: 0 = Norr, 1 = Öst, 2 = Söder, 3 = Väst
-    protected int direction = 0;
+    protected int direction = 1;
 
     //  Konstruktor (protected → bara subklasser får använda den) 
     protected Car(int nrDoors, double enginePower, Color color, String modelName) {
@@ -52,11 +52,11 @@ public abstract class Car implements Movable {
         return direction;                 // Returnerar bilens riktning
     }
 
-    protected double getY() {
+    public double getY() {
         return y;                         // Returnerar bilens Y-position
     }
 
-    protected double getX() {
+    public double getX() {
         return x;                         // Returnerar bilens X-position
     }
 
@@ -66,25 +66,26 @@ public abstract class Car implements Movable {
 
     //  Motorhantering 
 
-    protected void startEngine() {
+    public void startEngine() {
         currentSpeed = 0.1;               // Startar motorn med en liten fart
     }
 
-    protected void stopEngine() {
+    public void stopEngine() {
         currentSpeed = 0;                 // Stänger av motorn helt
     }
 
     //  Gas och broms 
 
-    protected void gas(double amount) {
+    public void gas(double amount) {
         // Säkerhetskontroll: amount måste vara mellan 0 och 1
+        if (currentSpeed == 0) return;
         if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("Amount must be between 0 and 1");
         }
         incrementSpeed(amount);           // Ökar hastigheten
     }
 
-    protected void brake(double amount) {
+    public void brake(double amount) {
         // Samma säkerhetskontroll som gas
         if (amount < 0 || amount > 1) {
             throw new IllegalArgumentException("Amount must be between 0 and 1");
