@@ -27,5 +27,8 @@ public class Workshop<T extends Car> {
         cars_amount.remove(car);
         return car;
     }
+    public List<T> getCarsAmount(){
+        return cars_amount;
+    }
     
 }

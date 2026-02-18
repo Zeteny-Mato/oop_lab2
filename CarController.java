@@ -33,10 +33,12 @@ public class CarController {
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
+        //cc.cars.add(new Volvo240());
 
-        cc.cars.get(0).y = 0;
+        cc.cars.get(0).y = 300;
         cc.cars.get(1).y = 100;
         cc.cars.get(2).y = 200;
+        //cc.cars.get(3).y = 300; dubbelkollar att ifall man lägger till en till volvo att båda skickas till listan. 
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -53,6 +55,7 @@ public class CarController {
        public void actionPerformed(ActionEvent e) {
 
            ArrayList<Car> carsToRemove = new ArrayList<>();
+           
 
            for (Car car : cars) {
 
@@ -65,20 +68,20 @@ public class CarController {
 
                // 3. Väggkoll
                int panelWidth = frame.drawPanel.getWidth();
-               int carWidth = 100; // ungefärlig bildbredd
+               int carWidth = 100; // bildbredd
                int maxX = panelWidth - carWidth;
                int maxy = panelWidth - carWidth;
 
                if (x < 0 || x > maxX || y<0 || y > maxy) {
 
-                   // Stoppa bilen
+                   // Stoppa
                    car.stopEngine();
 
-                   // Vänd 180 grader
+                   // Vänd
                    car.turnLeft();
                    car.turnLeft();
 
-                   // Starta igen
+                   // Start
                    car.startEngine();
 
                    // Klampa in i rutan
@@ -92,7 +95,7 @@ public class CarController {
                    car.y = y;
                }
 
-               // 4. Workshop-krock (endast Volvo)
+               // 4. Workshop volvo kan köra in. 
                if (car instanceof Volvo240 volvo) {
 
                    int wx = frame.drawPanel.volvoWorkshopPoint.x;
@@ -105,27 +108,26 @@ public class CarController {
                    if (dist < 50) {
                        volvoWorkshop.addCar(volvo);
                        carsToRemove.add(volvo);
+                       System.out.println("Added a Volvo to workshop!"); 
+                       System.out.println(volvoWorkshop.getCarsAmount()); //blir som ett id nummer typ. 
                        continue; // rita inte bilen
                    }
 
                    frame.drawPanel.moveVolvo(x, y);
                }
 
-               // 5. Saab
                else if (car instanceof Saab95) {
-                   frame.drawPanel.moveSaab(x, y);
+                  frame.drawPanel.moveSaab(x, y);
               }
 
-               // 6. Scania
                else if (car instanceof Scania) {
                    frame.drawPanel.moveScania(x, y);
                }
+                // 5. Ta bort bilar som lastats i 
            }
-
-           // 7. Ta bort bilar som lastats i workshop
            cars.removeAll(carsToRemove);
 
-           // 8. Rita om
+           // 6. Rita om
            frame.drawPanel.repaint();
         }
     }
