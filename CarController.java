@@ -59,14 +59,14 @@ public class CarController {
 
            for (Car car : cars) {
 
-               // 1. Flytta bilen
+               // Flytta bilen
                car.move();
 
-               // 2. Hämta position
+               // Hämta position
                int x = (int) Math.round(car.getX());
                int y = (int) Math.round(car.getY());
 
-               // 3. Väggkoll
+               // 3. Väggkollision
                int panelWidth = frame.drawPanel.getWidth();
                int carWidth = 100; // bildbredd
                int maxX = panelWidth - carWidth;
@@ -74,17 +74,14 @@ public class CarController {
 
                if (x < 0 || x > maxX || y<0 || y > maxy) {
 
-                   // Stoppa
                    car.stopEngine();
-
-                   // Vänd
+                   
                    car.turnLeft();
                    car.turnLeft();
 
-                   // Start
                    car.startEngine();
 
-                   // Klampa in i rutan
+                   // sätter tillbaka bilen i rutan. 
                    if (x < 0) x = 0;
                    if (x > maxX) x = maxX;
                    if (y<0) y = 0;
@@ -95,25 +92,26 @@ public class CarController {
                    car.y = y;
                }
 
-               // 4. Workshop volvo kan köra in. 
+               // Workshop volvo kan köra in. 
                if (car instanceof Volvo240 volvo) {
 
-                   int wx = frame.drawPanel.volvoWorkshopPoint.x;
-                   int wy = frame.drawPanel.volvoWorkshopPoint.y;
+                   int vwx = frame.drawPanel.volvoWorkshopPoint.x;
+                   int vwy = frame.drawPanel.volvoWorkshopPoint.y;
 
-                   double dx = volvo.getX() - wx;
-                   double dy = volvo.getY() - wy;
+                   double dx = volvo.getX() - vwx;
+                   double dy = volvo.getY() - vwy;
                    double dist = Math.sqrt(dx * dx + dy * dy);
 
                    if (dist < 50) {
                        volvoWorkshop.addCar(volvo);
                        carsToRemove.add(volvo);
-                       System.out.println("Added a Volvo to workshop!"); 
+                       System.out.println("Added a Volvo to workshop"); 
                        System.out.println(volvoWorkshop.getCarsAmount()); //blir som ett id nummer typ. 
                        continue; // rita inte bilen
                    }
-
-                   frame.drawPanel.moveVolvo(x, y);
+                   else {
+                    frame.drawPanel.moveVolvo(x, y);
+                   }  
                }
 
                else if (car instanceof Saab95) {
@@ -123,11 +121,11 @@ public class CarController {
                else if (car instanceof Scania) {
                    frame.drawPanel.moveScania(x, y);
                }
-                // 5. Ta bort bilar som lastats i 
+                // Ta bort bilar som lastats i 
            }
            cars.removeAll(carsToRemove);
 
-           // 6. Rita om
+           // repaint() calls the paintComponent method of the panel
            frame.drawPanel.repaint();
         }
     }
