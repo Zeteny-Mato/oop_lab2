@@ -1,0 +1,22 @@
+UML före:
+https://lucid.app/lucidchart/811874b4-cff1-47e1-b2f9-c3f601a1d11b/edit?invitationId=inv_62484afb-445f-4c9b-a955-54f292f120c1&page=HWEp-vi-RSFO#
+
+UML efter:
+https://lucid.app/lucidchart/b8906a30-c5bd-4afc-8a49-65d84f3f1b72/edit?invitationId=inv_03ea7955-690c-48e8-a62e-c1bfb39e05a5&page=0_0#
+
+
+
+1. Flytta ansvaret av koordinathantering ifrån Car till Movable. Detta förbättrar SRP och ökar abstraktion och cohesion samt minskar coupling
+
+2. Extrahera Motorlogik till ett Engine interface. Detta är bättre enligt DIP då Car nu beror på en abstraktion istället för en implementation 
+
+3.Skapa ett Turbo interface och låt Saab95 använda detta. Minskar coupling och ger möjlighet till återanvändning.
+
+4. Skapa ett interface för ett flaks beteende (höja,sänka,hämta vinkel).
+Ge detta till Trucks via komposition, bättre SoC,SRP
+
+5. Inför ett CarFactory för objektinstansiering, minskar coupling mellan CarController och konkreta bilklasser.
+
+6. Extrahera logik från CarController till separata klasser, flytta timer och main-metod till en separat play/simulation klass
+
+7. Generalisera DrawPanel, ta bort hårdkodade värden och metoder för specifika biltyper och inför en generaliserad design, ökar coheshion och minskar coupling 
