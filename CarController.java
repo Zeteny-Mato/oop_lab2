@@ -1,4 +1,6 @@
+
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class CarController{
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -21,7 +23,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
+    ArrayList<Car<?>> cars = new ArrayList<>();
     Workshop<Volvo240> volvoWorkshop = new Workshop<>(5);
 
     //methods:
@@ -30,15 +32,9 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Scania());
-        //cc.cars.add(new Volvo240());
-
-        cc.cars.get(0).y = 300;
-        cc.cars.get(1).y = 100;
-        cc.cars.get(2).y = 200;
-        //cc.cars.get(3).y = 300; dubbelkollar att ifall man lägger till en till volvo att båda skickas till listan. 
+        cc.cars.add(new Volvo240(new Position(1,300)));
+        cc.cars.add(new Saab95(new Position(1,100)));
+        cc.cars.add(new Scania(new Position(1,200)));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -54,52 +50,40 @@ public class CarController {
        @Override
        public void actionPerformed(ActionEvent e) {
 
-           ArrayList<Car> carsToRemove = new ArrayList<>();
+           ArrayList<Car<?>> carsToRemove = new ArrayList<>();
            
-
-           for (Car car : cars) {
+           //This now works well
+           for ( Car<?> car : cars) {
 
                // Flytta bilen
                car.move();
 
-               // Hämta position
-               int x = (int) Math.round(car.getX());
-               int y = (int) Math.round(car.getY());
-
-               // 3. Väggkollision
+               int x = (int)car.getPosition().getX(); 
+               int y = (int)car.getPosition().getY();
                int panelWidth = frame.drawPanel.getWidth();
                int carWidth = 100; // bildbredd
                int maxX = panelWidth - carWidth;
-               int maxy = panelWidth - carWidth;
+               int maxY = panelWidth - carWidth;
 
-               if (x < 0 || x > maxX || y<0 || y > maxy) {
+               car.getPosition().clamp(maxX,0,maxY,0);
 
-                   car.stopEngine();
-                   
-                   car.turnLeft();
-                   car.turnLeft();
-
-                   car.startEngine();
-
-                   // sätter tillbaka bilen i rutan. 
-                   if (x < 0) x = 0;
-                   if (x > maxX) x = maxX;
-                   if (y<0) y = 0;
-                   if (y>maxy) y = maxy;
-
-                   // Uppdatera bilens position
-                   car.x = x;
-                   car.y = y;
+               Position p = car.getPosition();
+               if(p.getX() == 0 || p.getX() == maxX || p.getY() == 0 || p.getY() == maxY)
+               {
+                    car.stopEngine();
+                    car.turnLeft();
+                    car.turnLeft();
+                    car.startEngine();
                }
 
-               // Workshop volvo kan köra in. 
+               // Workshop volvo kan köra in. //change to maybe a list  of workshops and see if the car matches the workshop? 
                if (car instanceof Volvo240 volvo) {
 
                    int vwx = frame.drawPanel.volvoWorkshopPoint.x;
                    int vwy = frame.drawPanel.volvoWorkshopPoint.y;
 
-                   double dx = volvo.getX() - vwx;
-                   double dy = volvo.getY() - vwy;
+                   double dx = volvo.getPosition().getX() - vwx;
+                   double dy = volvo.getPosition().getY() - vwy;
                    double dist = Math.sqrt(dx * dx + dy * dy);
 
                    if (dist < 50) {
@@ -130,55 +114,53 @@ public class CarController {
         }
     }
 
-
-
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-       for (Car car : cars
+       for (Car<?> car : cars
                 ) {
             car.gas(gas);
         }
     }
     void brake(int amount){
         double brake = ((double) amount/100);
-        for (Car car : cars) {
+        for (Car<?> car : cars) {
             car.brake(brake);
         }
     }
     void turboOn(){
-        for (Car car: cars){
+        for (Car<?> car: cars){
             if(car instanceof Saab95 saab){
                 saab.setTurboOn();
             }
         }
     }
     void turboOff(){
-        for (Car car : cars){
+        for (Car<?> car : cars){
             if(car instanceof Saab95 saab){
                 saab.setTurboOff();
             }
         }
     }
     void liftBed(){
-        for (Car car : cars){
+        for (Car<?> car : cars){
             if (car instanceof Scania scania){
-                scania.raiseorlowerPlatform(10);
+                scania.getPlatform().raise();
             }
         }
     }
     void lowerBed(){
-        for (Car car : cars){
+        for (Car<?> car : cars){
             if(car instanceof Scania scania){
-                scania.raiseorlowerPlatform(-10);
+                scania.getPlatform().lower();
             }
         }
     }
     void startAll(){
-        for (Car car : cars) car.startEngine();
+        for (Car<?> car : cars) car.startEngine();
     }
     void stopAll(){
-        for(Car car : cars) car.stopEngine();
+        for(Car<?> car : cars) car.stopEngine();
     }
     
 }

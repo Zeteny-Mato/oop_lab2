@@ -1,0 +1,7 @@
+TODO:
+Gör ett interface för egenskapen att kunna förvara saker
+kalla det ksk storage? eller typ container? 
+vi måste göra packages, Explorern är riktigt
+grötig atm, 
+Måste fixa och deligera arbetsområdena i Carview,CarController och DrawPanel 
+KOLLA ÖVER  platformslogiken när ska de vara nere när ska de vara uppe FIXA FIXA 
