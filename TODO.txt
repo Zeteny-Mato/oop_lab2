@@ -1,7 +1,11 @@
 TODO:
-Gör ett interface för egenskapen att kunna förvara saker
-kalla det ksk storage? eller typ container? 
-vi måste göra packages, Explorern är riktigt
-grötig atm, 
-Måste fixa och deligera arbetsområdena i Carview,CarController och DrawPanel 
-KOLLA ÖVER  platformslogiken när ska de vara nere när ska de vara uppe FIXA FIXA 
+1. fixa parameter problem i CarFactory/CarTransport
+2. fixa codependency mellan CarController och CarView
+3. Fixa generaliserad variant av DrawPanel
+4. Packagea koden på lämpligt sätt (se folders)
+
+
+
+OM TID:
+fixa ett interface för att förvara saker
+som både workshop och CarTransport kan implementa
