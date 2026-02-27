@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -10,29 +12,15 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel{
 
-    // Just a single image, TODO: Generalize
-    BufferedImage volvoImage;
-    BufferedImage saabImage;
-    BufferedImage scaniaImage;
+    private final List<CarImage> carImages = new ArrayList<>();
+
+    // Bilder för biltyper 
+    private BufferedImage volvoImage;
+    private BufferedImage saabImage;
+    private BufferedImage scaniaImage;
     // To keep track of a single car's position
-    Point volvoPoint = new Point(0, 0);
-    Point saabPoint = new Point(0, 100);
-    Point scaniaPoint = new Point(0, 200);
-
-    void moveVolvo(int x, int y){volvoPoint.x = x; volvoPoint.y =y;}
-    void moveSaab(int x, int y){saabPoint.x = x; saabPoint.y =y;}
-    void moveScania(int x, int y){scaniaPoint.x = x; scaniaPoint.y = y;}
-
-
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
-
-    // TODO: Make this general for all cars
-    //void moveit(int x, int y){
-        //volvoPoint.x = x;
-        //volvoPoint.y = y;
-
-    //}
+    Point volvoWorkshopPoint = new Point(300, 300);
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -55,7 +43,19 @@ public class DrawPanel extends JPanel{
         {
             ex.printStackTrace();
         }
-
+    }
+    public void addCar(Car<?> car){
+        BufferedImage img = imageFor(car);
+        carImages.add(new CarImage(car, img));
+    }
+    public void removeCar(Car<?> car){
+        carImages.removeIf(ci -> ci.getCar()== car);
+    }
+    private BufferedImage imageFor(Car<?> car){
+        if (car instanceof Volvo240) return volvoImage;
+        if(car instanceof Saab95) return saabImage;
+        if(car instanceof Scania) return scaniaImage;
+        throw new IllegalArgumentException("Unknow car type");
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -63,9 +63,15 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
-        g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
-        g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        if (volvoWorkshopImage != null){
+            g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        }
+        for (CarImage ci : carImages){
+            int x = (int) ci.getCar().getPosition().getX();
+            int y = (int) ci.getCar().getPosition().getY();
+            g.drawImage(ci.getImage(), x, y, null);
+ 
+        }
+        
     }
 }

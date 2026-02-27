@@ -26,22 +26,11 @@ public class CarController{
     ArrayList<Car<?>> cars = new ArrayList<>();
     Workshop<Volvo240> volvoWorkshop = new Workshop<>(5);
 
-    //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(CarFactory.createCar("saab95",new Position(1,100)));
-        cc.cars.add(CarFactory.createCar("scania",new Position(1,200)));
-        cc.cars.add(CarFactory.createCar("volvo240",new Position(1,300)));
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
+    public void startTimer(){
+        timer.start();
     }
+
+    //methods:
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -57,9 +46,6 @@ public class CarController{
 
                // Flytta bilen
                car.move();
-
-               int x = (int)car.getPosition().getX(); 
-               int y = (int)car.getPosition().getY();
                int panelWidth = frame.drawPanel.getWidth();
                int carWidth = 100; // bildbredd
                int maxX = panelWidth - carWidth;
@@ -89,21 +75,11 @@ public class CarController{
                    if (dist < 50) {
                        volvoWorkshop.addCar(volvo);
                        carsToRemove.add(volvo);
+                       frame.drawPanel.removeCar(volvo);
                        System.out.println("Added a Volvo to workshop"); 
                        System.out.println(volvoWorkshop.getCarsAmount()); //blir som ett id nummer typ. 
                        continue; // rita inte bilen
                    }
-                   else {
-                    frame.drawPanel.moveVolvo(x, y);
-                   }  
-               }
-
-               else if (car instanceof Saab95) {
-                  frame.drawPanel.moveSaab(x, y);
-              }
-
-               else if (car instanceof Scania) {
-                   frame.drawPanel.moveScania(x, y);
                }
                 // Ta bort bilar som lastats i 
            }
