@@ -1,17 +1,16 @@
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-public class CarTransport <T extends Car>extends Trucks<CombustionEngine, BinaryPlatform>{
-    private int capacity; //Max antal bilar
+public class CarTransport <T extends Car<?>>extends Trucks<CombustionEngine, BinaryPlatform>{
+    private final int capacity = 8; //Max antal bilar
     public List<T> loadedCars = new ArrayList<>(); //Lista över alla lastade bilar
     private int unloadOffset = 0; //Håller koll på hur långt ifrån nästa lossad bil ska placeras 
 
 //konstruktor
-    public CarTransport(Position position,int capacity) 
+    public CarTransport(Position position) 
     {
         //int nrDoors, double enginePower, Color color, String modelName
         super(new CombustionEngine(400),position, new BinaryPlatform(true), 2, Color.BLUE, "CarTransport"); //anropar turcks konstruktorn
-        this.capacity = capacity; //sätter maxkapacitet
 
     }
 

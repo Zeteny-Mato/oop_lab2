@@ -1,9 +1,7 @@
 TODO:
-1. fixa parameter problem i CarFactory/CarTransport
 2. fixa codependency mellan CarController och CarView
 3. Fixa generaliserad variant av DrawPanel
 4. Packagea koden på lämpligt sätt (se folders)
-
 
 
 OM TID:
