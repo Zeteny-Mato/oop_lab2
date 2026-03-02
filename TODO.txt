@@ -7,3 +7,28 @@ TODO:
 OM TID:
 fixa ett interface för att förvara saker
 som både workshop och CarTransport kan implementa
+
+
+Uppgift 3: 
+* angularPlatform
+* BinaryPlatform
+* Car
+* CarController
+* CarFactory
+* CarImage (ska nog tas bort ändå)
+* CarModel
+* CarSim
+* CarTransport 
+* CarView
+* CombustionEngine
+* DrawPanel 
+* Engine 
+* Movable
+* Platform 
+* Position 
+* Saab95 
+* Scania
+* Trucks
+* TurboEngine 
+* Volvo240 
+* Workshop
