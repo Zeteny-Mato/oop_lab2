@@ -10,25 +10,25 @@ som både workshop och CarTransport kan implementa
 
 
 Uppgift 3: 
-* angularPlatform
-* BinaryPlatform
+* angularPlatform --- nej, state logik, men är inte state designmönster. 
+* BinaryPlatform --- nej, state logik på grund av platformstate, raise = true och så vidare. 
 * Car
 * CarController
-* CarFactory
+* CarFactory --- Factory method, skapar olika Car-subtyper baserat på input. 
 * CarImage (ska nog tas bort ändå)
-* CarModel
+* CarModel --- Composite, för den hanterar en lista av bilar, lite state för Scania använder sig av "Kör inte ifall ramp är nere", men räknas nog fortfarande som nej. 
 * CarSim
 * CarTransport 
 * CarView
-* CombustionEngine
+* CombustionEngine --- nej, har dock boolean-state av och på (running false eller true)
 * DrawPanel 
-* Engine 
-* Movable
-* Platform 
-* Position 
-* Saab95 
-* Scania
-* Trucks
-* TurboEngine 
-* Volvo240 
-* Workshop
+* Engine --- nej, rent interface 
+* Movable --- nej, rent interface
+* Platform ---nej, rent interface
+* Position --- nej
+* Saab95 --- state-beroende av turbo logiken, men nej. 
+* Scania --- Nej
+* Trucks --- state-beroende logik finns, men nej till alla fyra. 
+* TurboEngine --- nej
+* Volvo240 --- Inget
+* Workshop --- Nej, Composite, klassen hanterar en list, men är inte en del-helhet-struktur. 
