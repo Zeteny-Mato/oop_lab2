@@ -1,6 +1,4 @@
-
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,132 +9,40 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController{
-    // member fields:
+public class CarController implements ActionListener{
+    private final CarModel model;
+    private final CarView view;
 
-    // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    private Timer timer;
+    public CarController(CarModel model, CarView view) {
+        this.model = model;
+        this.view = view;
+        this.timer = new Timer(delay, this);
+    }
 
-    // The frame that represents this instance View of the MVC pattern
-    CarView frame;
-    // A list of cars, modify if needed
-    ArrayList<Car<?>> cars = new ArrayList<>();
-    Workshop<Volvo240> volvoWorkshop = new Workshop<>(5);
-
-    public void startTimer(){
+    public void startTimer() {
         timer.start();
     }
 
-    //methods:
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-       @Override
-       public void actionPerformed(ActionEvent e) {
-
-           ArrayList<Car<?>> carsToRemove = new ArrayList<>();
-           
-           //This now works well
-           for ( Car<?> car : cars) {
-
-               // Flytta bilen
-               car.move();
-               int panelWidth = frame.drawPanel.getWidth();
-               int carWidth = 100; // bildbredd
-               int maxX = panelWidth - carWidth;
-               int maxY = panelWidth - carWidth;
-
-               car.getPosition().clamp(maxX,0,maxY,0);
-
-               Position p = car.getPosition();
-               if(p.getX() == 0 || p.getX() == maxX || p.getY() == 0 || p.getY() == maxY)
-               {
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.startEngine();
-               }
-
-               // Workshop volvo kan köra in. //change to maybe a list  of workshops and see if the car matches the workshop? 
-               if (car instanceof Volvo240 volvo) {
-
-                   int vwx = frame.drawPanel.volvoWorkshopPoint.x;
-                   int vwy = frame.drawPanel.volvoWorkshopPoint.y;
-
-                   double dx = volvo.getPosition().getX() - vwx;
-                   double dy = volvo.getPosition().getY() - vwy;
-                   double dist = Math.sqrt(dx * dx + dy * dy);
-
-                   if (dist < 50) {
-                       volvoWorkshop.addCar(volvo);
-                       carsToRemove.add(volvo);
-                       frame.drawPanel.removeCar(volvo);
-                       System.out.println("Added a Volvo to workshop"); 
-                       System.out.println(volvoWorkshop.getCarsAmount()); //blir som ett id nummer typ. 
-                       continue; // rita inte bilen
-                   }
-               }
-                // Ta bort bilar som lastats i 
-           }
-           cars.removeAll(carsToRemove);
-
-           // repaint() calls the paintComponent method of the panel
-           frame.drawPanel.repaint();
-        }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        model.update();
+        view.repaint();
     }
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-       for (Car<?> car : cars
-                ) {
-            car.gas(gas);
-        }
+    void gas(int Amount){
+        model.gas(Amount / 100);
     }
-    void brake(int amount){
-        double brake = ((double) amount/100);
-        for (Car<?> car : cars) {
-            car.brake(brake);
-        }
-    }
-    void turboOn(){
-        for (Car<?> car: cars){
-            if(car instanceof Saab95 saab){
-                saab.setTurboOn();
-            }
-        }
-    }
-    void turboOff(){
-        for (Car<?> car : cars){
-            if(car instanceof Saab95 saab){
-                saab.setTurboOff();
-            }
-        }
-    }
-    void liftBed(){
-        for (Car<?> car : cars){
-            if (car instanceof Scania scania){
-                scania.getPlatform().raise();
-            }
-        }
-    }
-    void lowerBed(){
-        for (Car<?> car : cars){
-            if(car instanceof Scania scania){
-                scania.getPlatform().lower();
-            }
-        }
-    }
-    void startAll(){
-        for (Car<?> car : cars) car.startEngine();
-    }
-    void stopAll(){
-        for(Car<?> car : cars) car.stopEngine();
-    }
-    
+
+    void brake(int Amount){
+        model.brake(Amount / 100);
+     }
+
+    void turboOn(){ model.turboOn();}
+    void turboOff(){ model.turboOff();}
+    void liftBed(){ model.liftBed();}
+    void lowerBed(){ model.lowerBed();}
+    void startAll(){ model.startAll();}
+    void stopAll(){ model.stopAll();}
 }

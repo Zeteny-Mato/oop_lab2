@@ -9,4 +9,11 @@ public class CarFactory {
         };
     }
 
+    public static Car<?> createCar(String type, Position pos, int capacity){
+        return switch(type.toLowerCase()){
+            case "Transport" -> new CarTransport<Car<?>>(pos, capacity);
+            default -> throw new IllegalArgumentException("Not a valid Car type");
+        };
+    }
+
 }
