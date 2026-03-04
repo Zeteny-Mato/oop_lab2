@@ -1,8 +1,6 @@
-import java.security.cert.CertPathValidatorException;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.CertPathTrustManagerParameters;
 
 public class CarModel {
     private final List<Car<?>> cars = new ArrayList<>();

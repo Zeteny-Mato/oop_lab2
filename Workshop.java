@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workshop<T extends Car<Engine>> {
+public class Workshop<T extends Car> {
     private int capacity; //Max antal bilar som kan vara i verkstaden
     private List<T> cars_amount = new ArrayList<>(); //Lista över alla bilar i verkstaden
 
