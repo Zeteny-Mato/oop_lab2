@@ -1,3 +1,4 @@
+import java.util.List;
 public class CarFactory {
 
     public static Car<?> createCar(String type, Position pos){
@@ -14,6 +15,9 @@ public class CarFactory {
             case "Transport" -> new CarTransport<Car<?>>(pos, capacity);
             default -> throw new IllegalArgumentException("Not a valid Car type");
         };
+    }
+    public static List<String> getSupportedTypes(){
+        return List.of("volvo240","saab95", "scania");
     }
 
 }

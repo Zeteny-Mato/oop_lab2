@@ -58,10 +58,10 @@ public class CarModel {
             int y =(int) c.getPosition().getY();
 
             if (x< 0 || x > worldWidth-100 || y<0 || y> worldHeight-100){
-                c.stopEngine();
+                //c.stopEngine();
                 c.turnLeft();
                 c.turnLeft();
-                c.startEngine();
+                //c.startEngine();
             }
             if ( c instanceof Volvo240 volvo){
                 double dx = volvo.getPosition().getX() -300;
@@ -76,13 +76,28 @@ public class CarModel {
         }
         cars.removeAll(toRemove);
     }
-    public List<CarState> getCarstates() {
-        List<CarState> states = new ArrayList<>();
-        for (Car<?> c : cars){
-            states.add(new CarState(   
-                c.getClass().getSimpleName(), (int) c.getPosition().getX(), (int) c.getPosition().getY()
-            ));
+    public Car<?> getLastCar(){
+        if(cars.isEmpty()) return null;
+        return cars.get(cars.size()-1);
+    }
+    public Car<?> removeLastCar(){
+        if (cars.isEmpty()) return null;
+        return cars.remove(cars.size() -1);
+    }
+    public void addCar(String typeInput){
+        if(cars.size()>= 5) return;
+        int y =cars.size() * 100;
+        Position p = new Position(1,y);
+        Car<?> c;
+
+        try {
+            c = CarFactory.createCar(typeInput.toLowerCase(),p);
         }
-        return states;
+        catch (Exception e){
+            List<String> types = CarFactory.getSupportedTypes();
+            int i = (int)(Math.random()* types.size());
+            c = CarFactory.createCar(types.get(i),p);
+        }
+        cars.add(c);
     }
 }

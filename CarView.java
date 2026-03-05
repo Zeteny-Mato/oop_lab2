@@ -5,6 +5,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -25,9 +26,14 @@ public class CarView extends JFrame{
     JButton turboOffButton = new JButton("Saab Turbo Off");
     JButton liftBedButton = new JButton("Scania lift bed");
     JButton lowerBedButton = new JButton("Scania lower bed");
+    JButton addCarButton = new JButton("Add car");
+    JButton removeCarButton = new JButton("Remove car");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+
+    JTextField carType = new JTextField(20);
+    
 
     private final JSpinner gasSpinner;
 
@@ -39,6 +45,10 @@ public class CarView extends JFrame{
 
         drawPanel = new DrawPanel(X, Y-240);
         add(drawPanel);
+
+        for (Car<?> c : controller.getModel().getCars()){
+            drawPanel.addCar(c);
+        }
 
         SpinnerModel model = new SpinnerNumberModel(
             0,
@@ -60,6 +70,9 @@ public class CarView extends JFrame{
         controls.add(turboOffButton, 3);
         controls.add(liftBedButton, 4);
         controls.add(lowerBedButton, 5);
+        controls.add(addCarButton, 6);
+        controls.add(removeCarButton, 7);
+        controls.add(carType, 8);
 
         add(controls);
         add(startButton);
@@ -73,15 +86,15 @@ public class CarView extends JFrame{
         lowerBedButton.addActionListener(e -> controller.lowerBed());
         startButton.addActionListener(e -> controller.startAll());
         stopButton.addActionListener(e -> controller.stopAll());
+        addCarButton.addActionListener(e -> controller.addCar(carType.getText()));
+        removeCarButton.addActionListener(e -> controller.removeCar());
+        
 
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public  void update(List<CarState> states) {
-        drawPanel.update(states);
+    public DrawPanel getDrawPanel(){
+        return drawPanel;
     }
-
-
 }

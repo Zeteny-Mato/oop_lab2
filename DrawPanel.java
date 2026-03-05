@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 // This panel represents the animated part of the view with the car images.
 
@@ -18,6 +20,7 @@ public class DrawPanel extends JPanel{
     private BufferedImage volvoImage;
     private BufferedImage saabImage;
     private BufferedImage scaniaImage;
+    private BufferedImage bgImage;
     // To keep track of a single car's position
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300, 300);
@@ -26,7 +29,19 @@ public class DrawPanel extends JPanel{
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
+        //this.setBackground(Color.green);
+        try {
+            URL url = new URL("https://st.depositphotos.com/1005951/1847/i/950/depositphotos_18472597-stock-photo-kebab-shop.jpg");
+            bgImage = ImageIO.read(url);}
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            // https://media.tenor.com/KWMg8hfohPsAAAAM/bobross.gif 
+            //https://st.depositphotos.com/1005951/1847/i/950/depositphotos_18472597-stock-photo-kebab-shop.jpg
+        
+
+
+
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -63,6 +78,9 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+         if (bgImage != null){
+            g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), null);
+        }
         if (volvoWorkshopImage != null){
             g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
         }
@@ -70,8 +88,6 @@ public class DrawPanel extends JPanel{
             int x = (int) ci.getCar().getPosition().getX();
             int y = (int) ci.getCar().getPosition().getY();
             g.drawImage(ci.getImage(), x, y, null);
- 
         }
-        
     }
 }

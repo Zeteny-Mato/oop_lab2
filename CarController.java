@@ -11,14 +11,17 @@ import java.util.ArrayList;
 
 public class CarController implements ActionListener{
     private final CarModel model;
-    private final CarView view;
+    private CarView view;
 
     private final int delay = 50;
     private Timer timer;
-    public CarController(CarModel model, CarView view) {
+    public CarController(CarModel model) { //, CarView view
         this.model = model;
-        this.view = view;
+        //this.view = view;
         this.timer = new Timer(delay, this);
+    }
+    public void setView(CarView view){
+        this.view = view;
     }
 
     public void startTimer() {
@@ -32,11 +35,11 @@ public class CarController implements ActionListener{
     }
 
     void gas(int Amount){
-        model.gas(Amount / 100);
+        model.gas(Amount / 100.0);
     }
 
     void brake(int Amount){
-        model.brake(Amount / 100);
+        model.brake(Amount / 100.0); 
      }
 
     void turboOn(){ model.turboOn();}
@@ -45,4 +48,22 @@ public class CarController implements ActionListener{
     void lowerBed(){ model.lowerBed();}
     void startAll(){ model.startAll();}
     void stopAll(){ model.stopAll();}
+
+    public CarModel getModel(){
+        return model;
+    }
+    public void addCar(String input){
+        model.addCar(input);
+        Car<?> c = model.getLastCar();
+        if (c != null){
+            view.getDrawPanel().addCar(c);
+        }
+        //view.getDrawPanel().addCar(model.getLastCar());
+    }
+    public void removeCar(){
+        Car<?> removed = model.removeLastCar();
+        if(removed != null) {
+            view.getDrawPanel().removeCar(removed);
+        }
+    }
 }
