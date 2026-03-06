@@ -62,7 +62,7 @@ public class CarView extends JFrame implements ModelObserver{
         gasPanel.add(gasSpinner);
         add(gasPanel);
         
-        JPanel controls = new JPanel(new GridLayout(2,4));
+        JPanel controls = new JPanel(new GridLayout(4,3));
 
         controls.add(gasButton, 0);
         controls.add(brakeButton, 1);
@@ -73,10 +73,10 @@ public class CarView extends JFrame implements ModelObserver{
         controls.add(addCarButton, 6);
         controls.add(removeCarButton, 7);
         controls.add(carType, 8);
-
+        controls.add(startButton,9);
+        controls.add(stopButton, 10);
         add(controls);
-        add(startButton);
-        add(stopButton);
+        
 
         gasButton.addActionListener(e -> controller.gas((int) gasSpinner.getValue()));
         brakeButton.addActionListener(e -> controller.brake((int) gasSpinner.getValue()));
