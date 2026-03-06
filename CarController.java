@@ -31,7 +31,7 @@ public class CarController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         model.update();
-        view.repaint();
+        //view.repaint();
     }
 
     void gas(int Amount){
@@ -54,16 +54,8 @@ public class CarController implements ActionListener{
     }
     public void addCar(String input){
         model.addCar(input);
-        Car<?> c = model.getLastCar();
-        if (c != null){
-            view.getDrawPanel().addCar(c);
-        }
-        //view.getDrawPanel().addCar(model.getLastCar());
     }
     public void removeCar(){
-        Car<?> removed = model.removeLastCar();
-        if(removed != null) {
-            view.getDrawPanel().removeCar(removed);
-        }
+        model.removeLastCar();
     }
 }

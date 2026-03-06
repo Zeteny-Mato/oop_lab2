@@ -5,10 +5,17 @@ import java.util.List;
 public class CarModel {
     private final List<Car<?>> cars = new ArrayList<>();
     private final Workshop<Volvo240> volvoWorkshop = new Workshop<>(5);
+    private final List<ModelObserver> observers = new ArrayList<>();
 
     private int worldWidth = 800;
     private int worldHeight = 560;
 
+    public void addObs(ModelObserver obs){
+        observers.add(obs);
+    }
+    public void updateObs(){
+        for (var obs : observers) obs.modelUpdated(); //alla som lyssnar ändras.  
+    }
     public void setWorldSize(int w, int h){
         this.worldWidth = w;
         this.worldHeight = h;
@@ -64,9 +71,7 @@ public class CarModel {
                 //c.startEngine();
             }
             if ( c instanceof Volvo240 volvo){
-                double dx = volvo.getPosition().getX() -300;
-                double dy = volvo.getPosition().getY() -300;
-                double dist = Math.sqrt(dx*dx + dy*dy);
+                double dist = volvo.getPosition().distanceTo(new Position(300, 300));
 
                 if (dist < 50){
                     volvoWorkshop.addCar(volvo);
@@ -75,6 +80,7 @@ public class CarModel {
             }
         }
         cars.removeAll(toRemove);
+        updateObs();
     }
     public Car<?> getLastCar(){
         if(cars.isEmpty()) return null;

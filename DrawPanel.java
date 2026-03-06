@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 
 public class DrawPanel extends JPanel{
 
-    private final List<CarImage> carImages = new ArrayList<>();
+    private final CarModel model;
 
     // Bilder för biltyper 
     private BufferedImage volvoImage;
@@ -22,13 +22,14 @@ public class DrawPanel extends JPanel{
     private BufferedImage scaniaImage;
     private BufferedImage bgImage;
     // To keep track of a single car's position
-    BufferedImage volvoWorkshopImage;
+    private BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300, 300);
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    public DrawPanel(CarModel model, int width, int height) {
+        this.model = model;
         this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(x, y));
+        this.setPreferredSize(new Dimension(width, height));
         //this.setBackground(Color.green);
         try {
             URL url = new URL("https://st.depositphotos.com/1005951/1847/i/950/depositphotos_18472597-stock-photo-kebab-shop.jpg");
@@ -36,8 +37,6 @@ public class DrawPanel extends JPanel{
             catch(IOException e){
                 e.printStackTrace();
             }
-            // https://media.tenor.com/KWMg8hfohPsAAAAM/bobross.gif 
-            //https://st.depositphotos.com/1005951/1847/i/950/depositphotos_18472597-stock-photo-kebab-shop.jpg
         
 
 
@@ -59,13 +58,6 @@ public class DrawPanel extends JPanel{
             ex.printStackTrace();
         }
     }
-    public void addCar(Car<?> car){
-        BufferedImage img = imageFor(car);
-        carImages.add(new CarImage(car, img));
-    }
-    public void removeCar(Car<?> car){
-        carImages.removeIf(ci -> ci.getCar()== car);
-    }
     private BufferedImage imageFor(Car<?> car){
         if (car instanceof Volvo240) return volvoImage;
         if(car instanceof Saab95) return saabImage;
@@ -84,10 +76,11 @@ public class DrawPanel extends JPanel{
         if (volvoWorkshopImage != null){
             g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
         }
-        for (CarImage ci : carImages){
-            int x = (int) ci.getCar().getPosition().getX();
-            int y = (int) ci.getCar().getPosition().getY();
-            g.drawImage(ci.getImage(), x, y, null);
+        for (Car<?> car : model.getCars()){
+            BufferedImage carImage = imageFor(car);
+            int x = (int) car.getPosition().getX();
+            int y = (int) car.getPosition().getY();
+            g.drawImage(carImage, x, y, null);
         }
     }
 }

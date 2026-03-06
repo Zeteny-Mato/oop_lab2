@@ -15,7 +15,7 @@ import java.util.List;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements ModelObserver{
 
     private final DrawPanel drawPanel;
     private final int X = 800;
@@ -43,12 +43,12 @@ public class CarView extends JFrame{
         setPreferredSize(new Dimension(X,Y));
         setLayout(new FlowLayout(FlowLayout.LEFT,  0, 0));
 
-        drawPanel = new DrawPanel(X, Y-240);
+        drawPanel = new DrawPanel(controller.getModel(),X, Y-240);
         add(drawPanel);
 
-        for (Car<?> c : controller.getModel().getCars()){
-            drawPanel.addCar(c);
-        }
+       // for (Car<?> c : controller.getModel().getCars()){
+          //  drawPanel.addCar(c);
+       // }
 
         SpinnerModel model = new SpinnerNumberModel(
             0,
@@ -96,5 +96,9 @@ public class CarView extends JFrame{
     }
     public DrawPanel getDrawPanel(){
         return drawPanel;
+    }
+    @Override //När modellen ändras, rita om. 
+    public void modelUpdated(){
+        repaint();
     }
 }
